@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request  # NOT the same as requests 
+from flask import Flask, render_template, request  # NOT the same as requests
 
 app = Flask(__name__)
 

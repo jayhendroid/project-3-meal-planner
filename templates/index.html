@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Beginner Meal Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 700px; margin: 2rem auto; background: #f9fafb; }
+    h1 { text-align: center; }
+    label { display: block; margin-top: 1rem; }
+    input, select { width: 100%; padding: .5rem; margin-top: .3rem; border-radius: 6px; border: 1px solid #ccc; }
+    button { margin-top: 1.2rem; padding: .6rem 1rem; border: none; background: #111; color: #fff; border-radius: 8px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Beginner Meal Planner</h1>
+  <p>Enter your preferences and we’ll generate a simple 7-day meal plan.</p>
+
+  <form method="post" action="/plan">
+    <label for="diet">Diet type</label>
+    <select id="diet" name="diet">
+      <option value="omnivore">Omnivore</option>
+      <option value="vegetarian">Vegetarian</option>
+      <option value="vegan">Vegan</option>
+    </select>
+
+    <label for="meals_per_day">Meals per day</label>
+    <input id="meals_per_day" type="number" name="meals_per_day" value="3" min="2" max="5">
+
+    <label for="calories">Calorie range (optional)</label>
+    <input id="calories" type="text" name="calories" placeholder="e.g., 1600–1800">
+
+    <label for="dislikes">Dislikes or allergies</label>
+    <input id="dislikes" type="text" name="dislikes" placeholder="e.g., peanuts, mushrooms">
+
+    <button type="submit">Generate Plan</button>
+  </form>
+</body>
+</html>

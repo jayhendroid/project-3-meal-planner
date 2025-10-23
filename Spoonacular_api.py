@@ -13,3 +13,4 @@ def get_diet_recipe_by_meal(meal):
     'number': 5  # Request 5 recipes
     }
     response = requests.get(URL, params=params)
+    

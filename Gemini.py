@@ -17,6 +17,7 @@ def gemini_query(prompt):
     )
     return response.text
 
+# Create a prompt for Gemini using the meal name and Spoonacular recipes
 def user_prompt(meal, recipes):
     prompt = f"Generate a detailed recipe for {meal} using the following recipes as references:\n\n"
     for i, recipe in enumerate(recipes, 1):

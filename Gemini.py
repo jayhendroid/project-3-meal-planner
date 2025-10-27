@@ -5,11 +5,11 @@ import google.generativeai as genai
 import os
 
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+AImodel = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 # Generate text using Gemini API, prompt is the input string given by the user
 def gemini_query(prompt):
-    response = model.generate_text(
+    response = AImodel.generate_text(
         prompt=prompt,
         max_output_tokens=500,
         temperature=0.7,
@@ -18,6 +18,7 @@ def gemini_query(prompt):
     return response.text
 
 # Create a prompt for Gemini using the meal name and Spoonacular recipes
+# TODO : Enhance the prompt to include user diet preferences and other details
 def user_prompt(meal, recipes):
     prompt = f"Generate a detailed recipe for {meal} using the following recipes as references:\n\n"
     for i, recipe in enumerate(recipes, 1):

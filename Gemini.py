@@ -19,10 +19,10 @@ def gemini_query(prompt):
 
 # Create a prompt for Gemini using the meal name and Spoonacular recipes
 # TODO : Enhance the prompt to include user restrictions and preferences
-def user_prompt(meal, recipes, calorieLimit, intolerances):
+def user_prompt(meal, recipes, intolerances):
     prompt = f"Create a detailed meal recipe for {meal} considering the following recipes from Spoonacular API:\n"
     for recipe in recipes:
         prompt += f"- {recipe['title']}: https://spoonacular.com/recipes/{recipe['title'].replace(' ', '-').lower()}-{recipe['id']}\n"
-    prompt += f"\nThe meal should fit within a calorie limit of {calorieLimit} and consider the following intolerances: {intolerances}.\n"
+    prompt += f"\nThe meal should consider the following intolerances: {intolerances}.\n"
     prompt += "Provide a step-by-step recipe with ingredients and instructions."
     return prompt

@@ -8,10 +8,12 @@ URL = "https://api.spoonacular.com/recipes/complexSearch"
 
 # Get diet recipes by meal name from Spoonacular API
 # 'meal' will come from user input in the Flask app
-def get_diet_recipes_by_meal(meal):
+def get_diet_recipes_by_meal(meal, dietStatus, intolerances):
     params = {
     'apiKey': API_KEY,
     'query': meal,
+    'diet': dietStatus,
+    'intolerances': intolerances,
     'number': 5  # Request 5 recipes
     }
 

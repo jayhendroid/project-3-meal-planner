@@ -1,7 +1,7 @@
 import unittest
 # the purpose of this file is to test basic functionality using unittest
 
-def userMealRestrictions(meal):
+def userMealRestrictions(intolerences):
     # Simulate user meal restriction logic
     restricted_meals = ['vegan', 'vegetarian', 'gluten-free']
     if intolerences.lower() in restricted_meals:

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Beginner Meal Planner</title>
+  <title>Recipe Results</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body { font-family: system-ui, sans-serif; max-width: 700px; margin: 2rem auto; background: #f9fafb; }
@@ -13,25 +13,29 @@
   </style>
 </head>
 <body>
-  <h1>Beginner Meal Planner</h1>
-  <p>Enter your preferences and we’ll generate a simple 7-day meal plan.</p>
+  <h1>Recipe Results</h1>
+  <p>Enter your dietary restrictions and preferences to generate a simple 7-day meal plan.</p>
 
   <form method="post" action="/plan">
+    <!-- Diet type -->
     <label for="diet">Diet type</label>
     <select id="diet" name="diet">
-      <option value="omnivore">Omnivore</option>
-      <option value="vegetarian">Vegetarian</option>
-      <option value="vegan">Vegan</option>
+        <option value="">No preference</option>
+        <option value="vegan">Vegan</option>
+        <option value="vegetarian">Vegetarian</option>
+        <option value="pescatarian">Pescatarian</option>
+        <option value="keto">Keto</option>
+        <option value="mediterranean">Mediterranean</option>
+        <option value="paleo">Paleo</option>
     </select>
 
-    <label for="meals_per_day">Meals per day</label>
-    <input id="meals_per_day" type="number" name="meals_per_day" value="3" min="2" max="5">
+    <!-- Freeform input for dietary restrictions / dislikes -->
+    <label for="restrictions">Dietary restrictions / dislikes</label>
+    <input id="restrictions" type="text" name="restrictions" placeholder="e.g., peanuts, gluten, shellfish">
 
-    <label for="calories">Calorie range (optional)</label>
-    <input id="calories" type="text" name="calories" placeholder="e.g., 1600–1800">
-
-    <label for="dislikes">Dislikes or allergies</label>
-    <input id="dislikes" type="text" name="dislikes" placeholder="e.g., peanuts, mushrooms">
+    <!-- Target calories -->
+    <label for="target_calories">Target calories (optional)</label>
+    <input id="target_calories" type="number" name="target_calories" placeholder="e.g., 1800">
 
     <button type="submit">Generate Plan</button>
   </form>

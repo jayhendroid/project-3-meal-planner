@@ -5,11 +5,11 @@ import google.generativeai as genai
 import os
 
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+AImodel = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 # Generate text using Gemini API, prompt is the input string given by the user
 def gemini_query(prompt):
-    response = model.generate_text(
+    response = AImodel.generate_text(
         prompt=prompt,
         max_output_tokens=500,
         temperature=0.7,
@@ -17,9 +17,12 @@ def gemini_query(prompt):
     )
     return response.text
 
-def user_prompt(meal, recipes):
-    prompt = f"Generate a detailed recipe for {meal} using the following recipes as references:\n\n"
-    for i, recipe in enumerate(recipes, 1):
-        prompt += f"Recipe {i}:\nTitle: {recipe['title']}\nLink: {recipe['sourceUrl']}\nSummary: {recipe['summary']}\n\n"
-    prompt += "Please provide a step-by-step recipe including ingredients and instructions."
+# Create a prompt for Gemini using the meal name and Spoonacular recipes
+# TODO : Enhance the prompt to include user restrictions and preferences
+def user_prompt(meal, recipes, calorieLimit, intolerances):
+    prompt = f"Create a detailed meal recipe for {meal} considering the following recipes from Spoonacular API:\n"
+    for recipe in recipes:
+        prompt += f"- {recipe['title']}: https://spoonacular.com/recipes/{recipe['title'].replace(' ', '-').lower()}-{recipe['id']}\n"
+    prompt += f"\nThe meal should fit within a calorie limit of {calorieLimit} and consider the following intolerances: {intolerances}.\n"
+    prompt += "Provide a step-by-step recipe with ingredients and instructions."
     return prompt

@@ -33,8 +33,8 @@ def get_recipe_information(json_response):
     recipe_info_list = []
     for recipe in json_response:
         recipe_info = {
-            'title': recipe['title'],
-            'id': recipe['id'],
+            'title': recipe.get['title'],
+            'id': recipe.get['id'],
             'calories': recipe.get('calories', 'N/A') # N/A if calories info is not available
         }
         recipe_info_list.append(recipe_info)

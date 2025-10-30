@@ -65,5 +65,7 @@ class TestMealRestrictions(unittest.TestCase):
 
 # Additional unit tests can be added here as needed
 
+# Unit test for json response parsing
+
 if __name__ == '__main__':
     unittest.main()

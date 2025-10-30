@@ -20,29 +20,28 @@ def gemini_query(prompt):
 # Create a recipe_info function that takes in meal, intolerances, diet, and calorieTarget, 
 # as well as the recipe information from Spoonacular API including recipe titles and calorie information
 # this function will NOT create the prompt, just organize the information for the prompt creation
-def recipe_info(meal, intolerances, diet, calorieTarget, recipes):
+def recipe_info(meal, intolerances, diet, calorieTarget, recipe_info_list):
     meal_data = {
         'meal': meal,
         'intolerances': intolerances,
         'diet': diet,
         'calorieTarget': calorieTarget,
-        'recipes': recipes
+        'recipes': recipe_info_list
     }
     return meal_data
 
-
-# The system prompt will handle prompt structure, the user_prompt will handle user input
-# System prompt will guide the AI in generating meal recipes
-def system_prompt(meal_data):
-    prompt = f"""You are a helpful assistant that creates meal recipes based on user preferences.
-The user is looking for {meal_data['diet']} recipes that accommodate the following intolerances:
-Intolerances: {meal_data['intolerances']}
-The user wants recipes that have a maximum of {meal_data['calorieTarget']} calories.
-Here are some recipe options based on the user's preferences:
+def user_prompt(user_input):
+    Meal_Data = f"""Meal: {user_input['meal']}
+Intolerances: {user_input['intolerances']}
+Diet: {user_input['diet']}
+Calorie Target: {user_input['calorieTarget']}
+Recipes: {user_input['recipes']}
 """
-    for recipe in meal_data['recipes']:
-        prompt += f"- {recipe['title']} (Calories: {recipe.get('calories', 'N/A')})\n"
-    
-    prompt += """\nGenerate a detailed recipe for the requested meal that best fits the user's needs, 
-    including ingredients, total calories, and preparation steps."""
+    return Meal_Data
+
+def system_prompt():
+    prompt = f"""Using the meal data provided by the user, generate a detailed meal recipe 
+    with step by step instructions, catering to the user's dietary preferences, inolerances, and calorie target.
+    Use the recipes provided by the user data as inspiration."""
     return prompt
+

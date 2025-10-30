@@ -25,3 +25,17 @@ def get_diet_recipes_by_meal(meal, intolerances, calorieTarget, diet):
 
 # The 'params' fields in the above function will be populated by user input from the Flask app
 # This can be changed to include diet preferences, as well as other parameters like cuisine, intolerances, etc.
+
+
+# Function to extract relevant recipe information from Spoonacular API response
+# This will eturn a list of recipe information dictionaries
+def get_recipe_information(json_response):
+    recipe_info_list = []
+    for recipe in json_response:
+        recipe_info = {
+            'title': recipe['title'],
+            'id': recipe['id'],
+            'calories': recipe.get('calories', 'N/A') # N/A if calories info is not available
+        }
+        recipe_info_list.append(recipe_info)
+    return recipe_info_list

@@ -17,9 +17,7 @@ def gemini_query(prompt):
     )
     return response.text
 
-# Create a recipe_info function that takes in meal, intolerances, diet, and calorieTarget, 
-# as well as the recipe information from Spoonacular API including recipe titles and calorie information
-# this function will NOT create the prompt, just organize the information for the prompt creation
+# Create recipe_info function to structure recipe information
 def recipe_info(meal, intolerances, diet, calorieTarget, recipe_info_list):
     meal_data = {
         'meal': meal,
@@ -30,6 +28,7 @@ def recipe_info(meal, intolerances, diet, calorieTarget, recipe_info_list):
     }
     return meal_data
 
+# Create user_prompt function to format the user input and recipe information into a prompt for Gemini API
 def user_prompt(user_input):
     Meal_Data = f"""Meal: {user_input['meal']}
 Intolerances: {user_input['intolerances']}
@@ -39,6 +38,8 @@ Recipes: {user_input['recipes']}
 """
     return Meal_Data
 
+
+# Create system_prompt function to provide instructions to Gemini API for generating meal recipes
 def system_prompt():
     prompt = f"""Using the meal data provided by the user, generate a detailed meal recipe 
     with step by step instructions, catering to the user's dietary preferences, inolerances, and calorie target.

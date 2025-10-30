@@ -17,15 +17,18 @@ def gemini_query(prompt):
     )
     return response.text
 
-# Create a prompt for Gemini using the params and Spoonacular recipes
-# def user_prompt(meal, recipes, intolerances, diet, calorieTarget):
-    # prompt = f"Create a detailed meal recipe for {meal} considering the following recipes from Spoonacular API:\n"
-    # for recipe in recipes:
-    #     prompt += f"- {recipe['title']} 
-    # prompt += f"""\nThe meal should never exceed or significantly fall short of the calorie target {calorieTarget}, 
-    # must consider the following intolerances: {intolerances}, 
-    # and should follow the user's dietary strategy {diet}.\n"""
-    # prompt += "Provide a step-by-step recipe with ingredients and instructions."
-    # return prompt
+# Create a recipe_info function that takes in meal, intolerances, diet, and calorieTarget, 
+# as well as the recipe information from Spoonacular API including recipe titles and calorie information
+# this function will NOT create the prompt, just format the information for the prompt creation
+def recipe_info(meal, intolerances, diet, calorieTarget, recipes):
+    meal_data = {
+        'meal': meal,
+        'intolerances': intolerances,
+        'diet': diet,
+        'calorieTarget': calorieTarget,
+        'recipes': recipes
+    }
+    return meal_data
+
 
 # TODO add system prompt using the information above

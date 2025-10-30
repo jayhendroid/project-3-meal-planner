@@ -12,7 +12,7 @@ def userMealRestrictions(intolerences):
 # Unit tests for userMealRestrictions function
 class TestMealRestrictions(unittest.TestCase):
     def test_valid_restriction(self):
-        self.assertTrue(userMealRestrictions('vegan', 'gluten-free', 'vegetarian'))
+        self.assertTrue(userMealRestrictions('vegan'))
 
     def test_non_restricted_meal(self):
         self.assertFalse(userMealRestrictions('chicken'))
@@ -53,11 +53,9 @@ class TestMealRestrictions(unittest.TestCase):
 
     def test_boolean_input(self):
         self.assertFalse(userMealRestrictions(True))
-        
+
 
 # Unit tests for Flask app routes
-
-# Units tests for recipe_info function in Gemini.py
 
 # Unit tests for system_prompt function in Gemini.py
 

@@ -32,3 +32,19 @@ def recipe_info(meal, intolerances, diet, calorieTarget, recipes):
 
 
 # TODO add system prompt using the information above
+
+# The system prompt will handle prompt structure, the user_prompt will handle user input
+# System prompt will guide the AI in generating meal recipes
+def system_prompt(meal_data):
+    prompt = f"""You are a helpful assistant that creates meal recipes based on user preferences.
+The user is looking for {meal_data['diet']} recipes that accommodate the following intolerances:
+Intolerances: {meal_data['intolerances']}
+The user wants recipes that have a maximum of {meal_data['calorieTarget']} calories.
+Here are some recipe options based on the user's preferences:
+"""
+    for recipe in meal_data['recipes']:
+        prompt += f"- {recipe['title']} (Calories: {recipe.get('calories', 'N/A')})\n"
+    
+    prompt += """\nGenerate a detailed recipe for the requested meal that best fits the user's needs, 
+    including ingredients, total calories, and preparation steps."""
+    return prompt

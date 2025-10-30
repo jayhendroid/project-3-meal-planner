@@ -31,8 +31,6 @@ def recipe_info(meal, intolerances, diet, calorieTarget, recipes):
     return meal_data
 
 
-# TODO add system prompt using the information above
-
 # The system prompt will handle prompt structure, the user_prompt will handle user input
 # System prompt will guide the AI in generating meal recipes
 def system_prompt(meal_data):

@@ -19,9 +19,9 @@ def get_diet_recipes_by_meal(meal, intolerances, calorieTarget, diet):
     }
 
     response = requests.get(URL, params=params)
-    recipes = response.json()  # Get the JSON response
-    return recipes['results']
+    recipes = response.json()  # .json() to parse JSON response into a Python dictionary
+    return recipes['results']   # results contains the list of recipes
 
 
-# TODO: the 'params' fields in the above function will be populated by user input from the Flask app
+# The 'params' fields in the above function will be populated by user input from the Flask app
 # This can be changed to include diet preferences, as well as other parameters like cuisine, intolerances, etc.

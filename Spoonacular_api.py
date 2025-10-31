@@ -8,6 +8,8 @@ URL = "https://api.spoonacular.com/recipes/complexSearch"
 
 # Get diet recipes by meal name from Spoonacular API
 # 'meal', 'maxCalores', etc will come from user input in the Flask app
+
+#TODO Add error handling for API requests
 def get_diet_recipes_by_meal(meal, intolerances, calorieTarget, diet):
     params = {
     'apiKey': API_KEY,
@@ -20,7 +22,7 @@ def get_diet_recipes_by_meal(meal, intolerances, calorieTarget, diet):
 
     response = requests.get(URL, params=params)
     recipes = response.json()  # .json() to parse JSON response into a Python dictionary
-    return recipes['results']   # results contains the list of recipes
+    return recipes['results'], None   # results contains the list of recipes
 
 
 # The 'params' fields in the above function will be populated by user input from the Flask app

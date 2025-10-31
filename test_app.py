@@ -2,10 +2,6 @@ from flask import Flask, render_template, request
 from Spoonacular_api import get_diet_recipes_by_meal
 from Gemini import user_prompt
 
-from flask import Flask, render_template, request
-from Spoonacular_api import get_diet_recipes_by_meal
-from Gemini import user_prompt
-
 app = Flask(__name__)
 
 @app.route('/')

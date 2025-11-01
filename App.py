@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from Spoonacular_api import get_diet_recipes_by_meal
+from Spoonacular_api import get_diet_recipes_by_diet
 from Gemini import user_prompt
 
 app = Flask(__name__)
@@ -16,7 +16,10 @@ def plan():
     restrictions = request.form.get('restrictions')
     target_calories = request.form.get('target_calories')
 
-
+    # Get recipes from Spoonacular API
+    recipes, error = get_diet_recipes_by_diet('dinner', restrictions, target_calories, diet)
+    if error:
+        return render_template('error.html', error=error)
 
     # Pass everything to the template
     return render_template(

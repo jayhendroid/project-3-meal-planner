@@ -6,8 +6,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html') # Home Page
 
+# Route to handle the form submission and generate dietary recipe based on user input
 @app.route('/plan', methods=['POST'])
 def plan():
     # Grab user input from the form

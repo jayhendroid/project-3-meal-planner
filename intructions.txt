@@ -5,7 +5,7 @@ To use this code, you will need:
     4. Low expectations
 
 Edit the KEYS.env and replace (GOOGLE_AI_KEY) with your key
-GitIgnore is set to delete any insertions into the KEYS.env or a .venv file if you choose to make one
+GitIgnore is set to delete any insertions into the KEYS.env or a .venv if you choose to make one
 
 Start or Open your Terminal
 Type this command into your Terminal:

@@ -1,5 +1,5 @@
 # pip install -q -U google-generativeai
-# The purpose of this file is to use Gemini API to generate meal recipes using Spoonacular API data
+# The purpose of this file is to use Gemini API to generate dietary recipes using Spoonacular API data
 
 import google.generativeai as genai
 import os
@@ -29,12 +29,12 @@ def recipe_info(diet, intolerances, calorieTarget, recipe_info_list):
 
 # Create user_prompt function to format the user input and recipe information into a prompt for Gemini API
 def user_prompt(user_input):
-    Recipe_Data = f"""Diet: {user_input['diet']}
+    structured_data_for_prompt = f"""Diet: {user_input['diet']}
 Intolerances: {user_input['intolerances']}
 Calorie Target: {user_input['calorieTarget']}
 Recipes: {user_input['recipes']}
 """
-    return Recipe_Data
+    return structured_data_for_prompt
 
 
 # Create system_prompt function to provide instructions to Gemini API for generating meal recipes

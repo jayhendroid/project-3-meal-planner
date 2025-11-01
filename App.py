@@ -16,12 +16,7 @@ def plan():
     restrictions = request.form.get('restrictions')
     target_calories = request.form.get('target_calories')
 
-    # Example: structured fake meal plan (to test plan.html layout)
-    plan = [
-        {"name": "Day 1: Smoothie & Salad", "description": "Green smoothie and mixed veggie salad.", "calories": 400},
-        {"name": "Day 2: Oatmeal & Tofu Stir Fry", "description": "Oatmeal for breakfast and tofu stir fry for lunch.", "calories": 450},
-        {"name": "Day 3: Chickpea Salad & Lentil Soup", "description": "Protein-rich chickpea salad and lentil soup.", "calories": 500},
-    ]
+
 
     # Pass everything to the template
     return render_template(

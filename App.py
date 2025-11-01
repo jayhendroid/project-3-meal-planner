@@ -27,7 +27,6 @@ def plan():
         diet=diet,
         restrictions=restrictions,
         target_calories=target_calories,
-        plan=plan,
         plan_md=None  # fallback not needed for now
     )
 

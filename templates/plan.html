@@ -15,19 +15,7 @@
  Dietary restrictions / dislikes: {{ restrictions or "None" }}
  Target calories: {{ target_calories or "Not specified" }}
   </pre>
-  <h2>Recipes</h2>
-  {% if plan %}
-  <div class="meal-plan">
-    {% for meal in plan %}
-      <div class="meal">
-        <h3>{{ meal.name }}</h3>
-        <p>{{ meal.description }}</p>
-        {% if meal.calories %}<p><strong>Calories:</strong> {{ meal.calories }}</p>{% endif %}
-      </div>
-    {% endfor %}
-  </div>
-  {% else %}
-    <pre>{{ plan_md }}</pre>
-  {% endif %}
+  <h2>Recipe</h2>
+  <pre>{{ dietary_recipe }}</pre>
  </body>
  </html>

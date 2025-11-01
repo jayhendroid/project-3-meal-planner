@@ -17,7 +17,7 @@ def plan():
     target_calories = request.form.get('target_calories')
 
     # Get recipes from Spoonacular API
-    recipes, error = get_diet_recipes_by_diet('dinner', restrictions, target_calories, diet)
+    recipes, error = get_diet_recipes_by_diet(diet, restrictions, target_calories)
     if error:
         return render_template('error.html', error=error)
 

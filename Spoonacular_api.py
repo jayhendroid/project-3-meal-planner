@@ -24,8 +24,12 @@ def get_diet_recipes_by_diet(diet, intolerances, calorieTarget):
     # Handle potential exceptions during the request
     try:
         response = requests.get(URL, params=params)
+        if response.status_code == 404: # Not Found
+            return None, 'No recipes found for the given criteria'
+        response.raise_for_status()  # Raise an error for bad status codes
+
         recipes = response.json()  # .json() to parse JSON response into a Python dictionary
-        return recipes['results'], None   # results contains the list of recipes
+        return recipes, None  # No error in this case
     except Exception as e:
         logging.exception(e)
         return None, 'Error connecting to Spoonacular API'

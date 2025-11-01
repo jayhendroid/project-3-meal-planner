@@ -1,6 +1,7 @@
 # TODO: Make requests to the Spoonacular API 
 
 import requests
+import logging
 import os
 
 API_KEY = os.getenv("SPOONACULAR_API_KEY")
@@ -10,19 +11,24 @@ URL = "https://api.spoonacular.com/recipes/complexSearch"
 # 'meal', 'maxCalores', etc will come from user input in the Flask app
 
 #TODO Add error handling for API requests
-def get_diet_recipes_by_meal(meal, intolerances, calorieTarget, diet):
+def get_diet_recipes_by_diet(diet, intolerances, calorieTarget):
     params = {
     'apiKey': API_KEY,
-    'query': meal,
-    'maxCalories': calorieTarget,
     'diet': diet,
+    'maxCalories': calorieTarget,
     'intolerances': intolerances,
     'number': 5  # Request 5 recipes
     }
 
-    response = requests.get(URL, params=params)
-    recipes = response.json()  # .json() to parse JSON response into a Python dictionary
-    return recipes['results'], None   # results contains the list of recipes
+    # Make the GET request to Spoonacular API
+    # Handle potential exceptions during the request
+    try:
+        response = requests.get(URL, params=params)
+        recipes = response.json()  # .json() to parse JSON response into a Python dictionary
+        return recipes['results'], None   # results contains the list of recipes
+    except Exception as e:
+        logging.exception(e)
+        return None, 'Error connecting to Spoonacular API'
 
 
 # The 'params' fields in the above function will be populated by user input from the Flask app

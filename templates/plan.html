@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -43,3 +44,25 @@
 </body>
 </html>
 
+=======
+ <html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <title>Your Recipes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+ </head>
+ <body>
+  <a href="/">← Back</a>
+  <h1>Your Recipes</h1>
+  <p><strong>Your preferences:</strong></p>
+  <pre>
+ Diet type: {{ diet or "No preference" }}
+ Dietary restrictions / dislikes: {{ restrictions or "None" }}
+ Target calories: {{ target_calories or "Not specified" }}
+  </pre>
+  <h2>Recipe</h2>
+  <pre>{{ dietary_recipe }}</pre>
+ </body>
+ </html>
+>>>>>>> bc0cec3 (made CSS styling (green) and added the CSS link to html templates)

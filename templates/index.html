@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>Meal Planner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -22,3 +23,39 @@
   </form>
 </body>
 </html>
+=======
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  
+ </head>
+ <body>
+  <h1>Recipe Results</h1>
+  <p>Enter your dietary restrictions and preferences to generate a simple 7-day meal plan.</p>
+  <form method="post" action="/plan">
+    <!-- Diet type -->
+    <label for="diet">Diet type</label>
+    <select id="diet" name="diet">
+        <option value="">No preference</option>
+        <option value="vegan">Vegan</option>
+        <option value="vegetarian">Vegetarian</option>
+        <option value="pescatarian">Pescatarian</option>
+        <option value="keto">Keto</option>
+        <option value="mediterranean">Mediterranean</option>
+        <option value="paleo">Paleo</option>
+    </select>
+    <!-- Freeform input for dietary restrictions / dislikes -->
+    <label for="restrictions">Dietary restrictions / dislikes</label>
+    <input id="restrictions" type="text" name="restrictions" placeholder="e.g., peanuts, gluten, shellfish">
+    <!-- Target calories -->
+    <label for="target_calories">Target calories (optional)</label>
+    <input id="target_calories" type="number" name="target_calories" placeholder="e.g., 1800">
+    <button type="submit">Generate Plan</button>
+  </form>
+ </body>
+
+<footer>
+  <p>Disclaimer: We are not trained nutritionists.</p>
+  <p>This APP is powered by Spoonacular API and Gemini AI.</p>
+</footer>
+
+ </html>
+>>>>>>> bc0cec3 (made CSS styling (green) and added the CSS link to html templates)

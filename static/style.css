@@ -1,0 +1,91 @@
+/* 🌿 Green theme for Beginner Meal Planner */
+:root {
+  --primary: #2e7d32;        /* deep green */
+  --primary-hover: #1b5e20;  /* darker on hover */
+  --bg: #f0fdf4;             /* very light green background */
+  --card: #ffffff;
+  --border: #c8e6c9;
+  --text: #1b1b1b;
+  --muted: #4e4e4e;
+  --radius: 10px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+}
+
+h1, h2, label {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+p, input, select, footer, small {
+  color: var(--text);
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-size: 1rem;
+}
+
+button {
+  margin-top: 1.5rem;
+  padding: 0.7rem 1.2rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+button:hover {
+  background: var(--primary-hover);
+}
+
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  color: #d4d4d4; /* soft gray */
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 1.5rem;
+}

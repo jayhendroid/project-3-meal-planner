@@ -7,7 +7,7 @@ import json
 os.environ["GOOGLE_API_KEY"] = "test_key"
 os.environ["SPOONACULAR_API_KEY"] = "test_key"
 
-from test_app import app
+from App import app
 from Gemini import system_prompt
 from Spoonacular_api import get_diet_recipes_by_diet, get_recipe_information
 

@@ -7,35 +7,28 @@ API_KEY = os.getenv("SPOONACULAR_API_KEY")
 URL = "https://api.spoonacular.com/recipes/complexSearch"
 
 # Get diet recipes by meal name from Spoonacular API
-# 'meal', 'maxCalores', etc will come from user input in the Flask app
+# 'meal', 'maxCalories', etc will come from user input in the Flask app
 def get_diet_recipes_by_meal(meal, intolerances, calorieTarget, diet):
     params = {
-    'apiKey': API_KEY,
-    'query': meal,
-    'maxCalories': calorieTarget,
-    'diet': diet,
-    'intolerances': intolerances,
-    'number': 5  # Request 5 recipes
+        'apiKey': API_KEY,
+        'query': meal,
+        'maxCalories': calorieTarget,
+        'diet': diet,
+        'intolerances': intolerances,
+        'number': 5  # Request 5 recipes
     }
 
     response = requests.get(URL, params=params)
-    recipes = response.json()  # .json() to parse JSON response into a Python dictionary
+    recipes = response.json()  # parse JSON response into a Python dictionary
     return recipes['results']   # results contains the list of recipes
 
 
-# The 'params' fields in the above function will be populated by user input from the Flask app
-# This can be changed to include diet preferences, as well as other parameters like cuisine, intolerances, etc.
-
-
 # Function to extract relevant recipe information from Spoonacular API response
-# This will eturn a list of recipe information dictionaries
+# Returns a dictionary with key information for a single recipe
 def get_recipe_information(json_response):
-    recipe_info_list = []
-    for recipe in json_response:
-        recipe_info = {
-            'title': recipe.get['title'],
-            'id': recipe.get['id'],
-            'calories': recipe.get('calories', 'N/A') # N/A if calories info is not available
-        }
-        recipe_info_list.append(recipe_info)
-    return recipe_info_list
+    recipe_info = {
+        'title': json_response.get('title'),
+        'id': json_response.get('id'),
+        'calories': json_response.get('calories', 'N/A')  # N/A if calories info is not available
+    }
+    return recipe_info

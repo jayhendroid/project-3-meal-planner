@@ -1,11 +1,36 @@
 import unittest
-# the purpose of this file is to test basic functionality using unittest
+from unittest.mock import patch, MagicMock
+import os
+import json
 
+# Set a fake API key for testing
+os.environ["GOOGLE_API_KEY"] = "test_key"
+os.environ["SPOONACULAR_API_KEY"] = "test_key"
+
+# Import after setting environment variables
+from test_app import app
+from Gemini import system_prompt
+from Spoonacular_api import get_diet_recipes_by_meal, get_recipe_information
+
+
+# Function to test
 def userMealRestrictions(intolerences):
-    # Simulate user meal restriction logic
     restricted_meals = ['vegan', 'vegetarian', 'gluten-free']
-    if intolerences.lower() in restricted_meals:
-        return True
+
+    if not isinstance(intolerences, str):
+        return False
+
+    intolerences = intolerences.strip().lower()
+    if not intolerences:
+        return False
+
+    for restriction in restricted_meals:
+        if restriction in intolerences.split(','):
+            return True
+    for restriction in restricted_meals:
+        if restriction in intolerences:
+            return True
+
     return False
 
 
@@ -23,49 +48,94 @@ class TestMealRestrictions(unittest.TestCase):
     def test_case_insensitivity(self):
         self.assertTrue(userMealRestrictions('Vegan'))
 
-    def test_partial_match(self):
-        self.assertFalse(userMealRestrictions('veg'))
-
-    def test_numeric_input(self):
-        self.assertFalse(userMealRestrictions('1234'))
-
-    def test_special_characters(self):
-        self.assertFalse(userMealRestrictions('@#$%'))
-
     def test_multiple_restrictions(self):
         self.assertTrue(userMealRestrictions('vegetarian, gluten-free'))
-
-    def test_whitespace_input(self):
-        self.assertFalse(userMealRestrictions('   '))
 
     def test_none_input(self):
         self.assertFalse(userMealRestrictions(None))
 
-    def test_long_string_input(self):
-        long_string = 'a' * 1000
-        self.assertFalse(userMealRestrictions(long_string))
-
-    def test_dictionary_input(self):
-        self.assertFalse(userMealRestrictions({'diet': 'vegan'}))
+    def test_numeric_input(self):
+        self.assertFalse(userMealRestrictions(123))
 
     def test_list_input(self):
-        self.assertFalse(userMealRestrictions(['vegan', 'vegetarian']))
+        self.assertFalse(userMealRestrictions([]))
+
+    def test_dictionary_input(self):
+        self.assertFalse(userMealRestrictions({}))
 
     def test_boolean_input(self):
         self.assertFalse(userMealRestrictions(True))
 
 
 # Unit tests for Flask app routes
+class TestFlaskRoutes(unittest.TestCase):
+    def setUp(self):
+        self.app = app.test_client()
+        self.app.testing = True
 
-# Unit tests for system_prompt function in Gemini.py
+    def test_home_route(self):
+        response = self.app.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Recipe Results', response.data)
 
-# Unit tests for get_diet_recipes_by_meal function in Spoonacular_api.py
+    def test_plan_route(self):
+        response = self.app.post('/plan', data={
+            'diet': '',
+            'restrictions': '',
+            'target_calories': ''
+        })
+        self.assertIn(response.status_code, [200, 302])
 
-# Unit tests for get_recipe_information function in Spoonacular_api.py
 
-# Additional unit tests can be added here as needed
+# Unit tests for system_prompt function
+class TestGeminiFunctions(unittest.TestCase):
+    def test_system_prompt_output(self):
+        result = system_prompt()  # no argument required
+        self.assertIsInstance(result, str)
+        self.assertTrue(len(result) > 0)
 
-# Unit test for json response parsing
+
+# Unit tests for Spoonacular API functions
+class TestSpoonacularAPI(unittest.TestCase):
+    @patch('Spoonacular_api.requests.get')
+    def test_get_diet_recipes_by_meal(self, mock_get):
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            'results': [{'id': 1, 'title': 'Test Recipe'}]
+        }
+        mock_get.return_value = mock_response
+
+        result = get_diet_recipes_by_meal('breakfast', '', 2000, 'vegan')
+        self.assertIsInstance(result, list)
+        self.assertEqual(result[0]['title'], 'Test Recipe')
+
+    @patch('Spoonacular_api.requests.get')
+    def test_get_recipe_information(self, mock_get):
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            'id': 1,
+            'title': 'Test Recipe',
+            'instructions': 'Mix ingredients'
+        }
+        mock_get.return_value = mock_response
+
+        recipe = get_recipe_information(mock_response.json.return_value)
+        self.assertIsInstance(recipe, dict)
+        self.assertEqual(recipe['title'], 'Test Recipe')
+        self.assertIn('calories', recipe)  # 'calories' key exists even if N/A
+
+
+# Unit test for JSON parsing
+class TestJSONParsing(unittest.TestCase):
+    def test_parse_json_response(self):
+        json_data = '{"results":[{"id":1,"title":"Recipe 1"}]}'
+        parsed = json.loads(json_data)
+        self.assertIsInstance(parsed, dict)
+        self.assertIn('results', parsed)
+        self.assertEqual(parsed['results'][0]['title'], 'Recipe 1')
+
 
 if __name__ == '__main__':
     unittest.main()

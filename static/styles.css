@@ -1,0 +1,74 @@
+/* Base layout */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f9f9f9;
+    color: #111;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Headings */
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+h2 {
+    margin-top: 2rem;
+    color: #333;
+}
+
+/* Preferences section */
+ul {
+    list-style-type: disc;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+}
+
+p {
+    font-weight: bold;
+}
+
+/* Recipe card */
+.recipe-box {
+    max-height: 500px; /* slightly taller to fit longer recipes */
+    overflow-y: auto;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+}
+
+/* Ingredients list inside recipe card */
+.recipe-box ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    font-weight: normal;
+    margin-bottom: 1rem;
+}
+
+/* Instructions steps inside recipe box */
+.recipe-box p {
+    margin-bottom: 0.8rem;
+    font-weight: normal;
+}
+
+/* General spacing */
+body > a {
+    display: inline-block;
+    margin-bottom: 1rem;
+}

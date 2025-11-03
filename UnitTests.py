@@ -3,6 +3,7 @@ from unittest.mock import patch, MagicMock
 import os
 import json
 
+
 # Set fake API keys for testing
 os.environ["GOOGLE_API_KEY"] = "test_key"
 os.environ["SPOONACULAR_API_KEY"] = "test_key"

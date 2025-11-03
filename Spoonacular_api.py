@@ -1,53 +1,61 @@
-# TODO: Make requests to the Spoonacular API 
-
 import requests
 import logging
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from KEYS.env
+load_dotenv("KEYS.env")
 
 API_KEY = os.getenv("SPOONACULAR_API_KEY")
 URL = "https://api.spoonacular.com/recipes/complexSearch"
 
-# Get diet recipes by meal name from Spoonacular API
-# 'meal', 'maxCalores', etc will come from user input in the Flask app
+if not API_KEY:
+    raise ValueError("Missing SPOONACULAR_API_KEY in KEYS.env")
 
-#TODO Add error handling for API requests
-def get_diet_recipes_by_diet(diet, intolerances, calorieTarget):
+# Get diet recipes by diet name from Spoonacular API
+def get_diet_recipes_by_diet(diet=None, intolerances=None, calorieTarget=None):
     params = {
-    'apiKey': API_KEY,
-    'diet': diet,
-    'maxCalories': calorieTarget,
-    'intolerances': intolerances,
-    'number': 5  # Request 5 recipes
+        'apiKey': API_KEY,
+        'number': 5  # Request 5 recipes
     }
 
-    # Make the GET request to Spoonacular API
-    # Handle potential exceptions during the request
+    # Only add optional parameters if they are provided
+    if diet:
+        params['diet'] = diet
+    if intolerances:
+        params['intolerances'] = intolerances
+    if calorieTarget:
+        params['maxCalories'] = calorieTarget
+
     try:
-        response = requests.get(URL, params=params)
-        if response.status_code == 404: # Not Found
-            return None, 'No recipes found for the given criteria'
-        response.raise_for_status()  # Raise an error for bad status codes
+        response = requests.get(URL, params=params, timeout=10)
+        print("Spoonacular request URL:", response.url)
+        print("Status code:", response.status_code)
 
-        recipes = response.json()  # .json() to parse JSON response into a Python dictionary
-        return recipes, None  # No error in this case
-    except Exception as e:
+        if response.status_code == 401:
+            return None, "Invalid Spoonacular API key or quota exceeded."
+        elif response.status_code == 404:
+            return None, "No recipes found for the given criteria."
+
+        response.raise_for_status()  # Raise error for 4xx or 5xx responses
+        recipes = response.json()
+        return recipes, None
+
+    except requests.exceptions.RequestException as e:
         logging.exception(e)
-        return None, 'Error connecting to Spoonacular API'
+        print("Spoonacular request failed:", e)
+        return None, f"Error connecting to Spoonacular API: {e}"
 
 
-# The 'params' fields in the above function will be populated by user input from the Flask app
-# This can be changed to include diet preferences, as well as other parameters like cuisine, intolerances, etc.
-
-
-# Function to extract relevant recipe information from Spoonacular API response
-# This will eturn a list of recipe information dictionaries
+# Function to extract relevant recipe information
 def get_recipe_information(json_response):
     recipe_info_list = []
-    for recipe in json_response:
+    for recipe in json_response.get('results', []):
         recipe_info = {
             'title': recipe.get('title'),
             'id': recipe.get('id'),
-            'calories': recipe.get('calories', 'N/A')  # N/A if calories info is not available
+            'image': recipe.get('image', 'N/A'),
+            'calories': recipe.get('calories', 'N/A')
         }
         recipe_info_list.append(recipe_info)
     return recipe_info_list

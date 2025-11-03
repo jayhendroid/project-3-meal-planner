@@ -1,21 +1,45 @@
 <!DOCTYPE html>
- <html lang="en">
- <head>
-  <meta charset="utf-8">
-  <title>Your Recipes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
- </head>
- <body>
-  <a href="/">← Back</a>
-  <h1>Your Recipes</h1>
-  <p><strong>Your preferences:</strong></p>
-  <pre>
- Diet type: {{ diet or "No preference" }}
- Dietary restrictions / dislikes: {{ restrictions or "None" }}
- Target calories: {{ target_calories or "Not specified" }}
-  </pre>
-  <h2>Recipe</h2>
-  <pre>{{ dietary_recipe }}</pre>
- </body>
- </html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Your Recipes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <a href="/">← Back</a>
+    <h1>Your Recipes</h1>
+
+    <p><strong>Your preferences:</strong></p>
+    <ul>
+        <li>Diet type: {{ diet or "No preference" }}</li>
+        <li>Dietary restrictions / dislikes: {{ restrictions or "None" }}</li>
+        <li>Target calories: {{ target_calories or "Not specified" }}</li>
+    </ul>
+
+    {% if dietary_recipe_list %}
+        {% for recipe in dietary_recipe_list %}
+            <h2>{{ recipe.title }}</h2>
+
+            {% if recipe.ingredients %}
+                <p><strong>Ingredients:</strong></p>
+                <ul>
+                    {% for ingredient in recipe.ingredients %}
+                        <li>{{ ingredient }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <p><strong>Instructions:</strong></p>
+            <div class="recipe-box">
+                {% for step in recipe.instructions.split('\n') if step.strip() %}
+                    <p>{{ step }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No recipes generated yet.</p>
+    {% endif %}
+</body>
+</html>
+
